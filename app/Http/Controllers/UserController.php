@@ -1,0 +1,67 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
+
+class UserController extends Controller
+{    
+    /**
+     * getAll users
+     *
+     * @return void
+     */
+    public function getAll() {
+        $users = \App\Models\User::get();
+        return view('users',["users"=>$users,"createnew"=>isset($_GET["new"])]);
+    }    
+    /**
+     * get a user
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function get($id) {
+        $user = \App\Models\User::where('id',$id)->firstOrFail();
+        return view('user',["user"=>$user]);
+
+    }    
+    /**
+     * edit a user
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function edit($id) {
+        $user = \App\Models\User::where('id',$id)->firstOrFail();
+        $user->name = $_POST['name'];
+        $user->role = $_POST['role'];
+        $user->email = $_POST['email'];
+        $user->save();
+        return redirect("/user/$id");
+    }    
+    /**
+     * delete a user
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function delete($id) {
+        $user = \App\Models\User::where('id',$id)->firstOrFail();
+        $user->delete();
+        return redirect("/users");
+    }    
+    /**
+     * create a new user
+     *
+     * @return void
+     */
+    public function create() {
+        $_POST["password"] = "yes";
+        \App\Models\user::create($_POST);
+        return redirect('/users');
+    }
+}
