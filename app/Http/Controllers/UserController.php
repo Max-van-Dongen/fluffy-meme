@@ -36,6 +36,8 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id) {
+        $duplicateCheck = \App\Models\User::where('email',$_POST['email'])->first();
+        if ($duplicateCheck) return redirect("/user/$id?dupem=1");
         $user = \App\Models\User::where('id',$id)->firstOrFail();
         $user->name = $_POST['name'];
         $user->role = $_POST['role'];
@@ -60,6 +62,8 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function create() {
+        $duplicateCheck = \App\Models\User::where('email',$_POST['email'])->first();
+        if ($duplicateCheck) return redirect("/users?dupem=1");
         $_POST["password"] = "yes";
         \App\Models\user::create($_POST);
         return redirect('/users');

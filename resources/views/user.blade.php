@@ -75,7 +75,9 @@
                                                                 <option value="2" {{$user->role == 2 ? "selected": ""}}>Admin</option>
                                                             </select>
                                                         </div>
-
+                                                        @if(isset($_GET["dupem"]))
+                                                            email bestaat al
+                                                        @endif
                                                         <div class="col-span-6">
                                                             <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
                                                             <input type="text" name="email" value="{{$user->email}}" id="email-address" autocomplete="email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
