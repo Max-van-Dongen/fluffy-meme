@@ -8,32 +8,32 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
 class FormController extends Controller
-{    
+{
     /**
-     * getAll producs
+     * get all forms
      *
-     * @return void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function getAll() {
         $forms = \App\Models\EnergyForm::get();
         return view('forms',["forms"=>$forms]);
-    }    
+    }
     /**
-     * get a product
+     * get a form
      *
      * @param  mixed $id
-     * @return void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function get($id) {
         $form = \App\Models\EnergyForm::where('id',$id)->firstOrFail();
         return view('form',["form"=>$form]);
 
-    }    
+    }
     /**
-     * edit a product
+     * edit a form
      *
      * @param  mixed $id
-     * @return void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function edit($id) {
         $form = \App\Models\EnergyForm::where('id',$id)->firstOrFail();
@@ -50,12 +50,12 @@ class FormController extends Controller
         $form->verbruik_e = $_POST['verbruik_e'];
         $form->save();
         return redirect("/form/$id");
-    }    
+    }
     /**
-     * delete a product
+     * delete a form
      *
      * @param  mixed $id
-     * @return void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function delete($id) {
         $user = \App\Models\EnergyForm::where('id',$id)->firstOrFail();
